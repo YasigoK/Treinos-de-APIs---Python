@@ -1,6 +1,8 @@
 import requests
 import pandas as pd
 from IPython.display import display 
+from tkinter import  *
+from tkinter import messagebox
 import os 
 
 
@@ -34,12 +36,23 @@ cepRJ = get_by_cep("2023-0010")
 acharCep = get_cep("SP","São paulo","São paulo")
 
 
-tabela01 = pd.DataFrame([cepRJ])
-display(tabela01)
 
-print("="*200)
-tabela02 = pd.DataFrame(acharCep)
-display(tabela02)
+janela = Tk()
+janela.title("Consulta de cep")
+janela.geometry("800x600")
+
+campo_texto= Label(janela, text="Digite o cep para realizar uma consulta", font=("Helvetica",16))
+campo_texto.pack(pady=16)
+
+cep_texto = StringVar()
+entrada = Entry(janela, font=("Helvetica",16,"bold"), textvariable=cep_texto)
+entrada.pack()
+
+botao = Button(janela,text="Pesquisar", width=30,font=("Helvetica",10))
+botao.pack(pady=2)
+
+resultado = Listbox(janela, width=70)
+resultado.pack(pady=9)
 
 
-
+janela.mainloop()
