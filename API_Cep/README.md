@@ -33,4 +33,17 @@ O programa vai passar como ref o cep digitado na interface, buscar da mesma form
 
 ### Exemplo de execução :
 
+<img src='assets/img1.png' width =500>
 
+_nota : A interface ainda não está 100% completa, ainda estou estudando como customizar interfaces no python_
+
+Depois basta digitar o **Cep** que deseja **pesquisar**
+
+<img src='assets/img2.png' width =500>
+
+No campo abaixo ele ira exibir todos os dados fornecidos pela api, e caso deseje salvar, basta apertar o botão de salvar em baixo
+
+O arquivo salvo também será em formato .json
+
+### exemplo de arquivo gerado : 
+<img src='assets/img3.png' width =500>

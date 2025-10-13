@@ -1,0 +1,12 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}", // Isso garante que o arquivo atual seja executado
+            "console": "integratedTerminal"
+        }
+    ]
+}
