@@ -1,11 +1,11 @@
 # Pesquisa de dados baseado no CEP
 
-A proposta do repositório é para servir como estudo sobre usos de APIs, mais precisamente sobre a api da [VIACEP](https://viacep.com.br/)
+A proposta do repositório é servir como estudo sobre usos de APIs, mais precisamente sobre a api da [VIACEP](https://viacep.com.br/)
 
-A ideia e base do exercício veio do vídeo [
+A ideia e a base do exercício veio do vídeo [
 API de CEP e Busca de Endereços com Python](https://www.youtube.com/watch?v=m72WIejruxI) do canal do youtube [Hashtag Programação](https://www.youtube.com/@HashtagProgramacao)
 
-Como mencionado, a ideia é fornecer os dados de uma requisição a API do viacep partidon de um cep digitado, o resultado sairia como uma tabela json semelhante a esta
+Como mencionado, a ideia é fornecer os dados de uma requisição a API do viacep partindo de um cep digitado, o resultado sairia como uma tabela json semelhante a esta
 
 ```
 JSON
@@ -29,7 +29,7 @@ URL: viacep.com.br/ws/01001000/json/
           
 ```
 
-O programa vai passar como ref o cep digitado na interface, buscar da mesma forma que o exemplo acima faz, e exibir dentro da interface as informações fornecidas pela api
+O programa vai usar como referência  o cep digitado na interface, buscar da mesma forma que o exemplo acima faz, e exibir dentro da interface as informações fornecidas pela api
 
 ### Exemplo de execução :
 
@@ -41,7 +41,7 @@ Depois basta digitar o **Cep** que deseja **pesquisar**
 
 <img src='assets/img2.png' width =500>
 
-No campo abaixo ele ira exibir todos os dados fornecidos pela api, e caso deseje salvar, basta apertar o botão de salvar em baixo
+No campo abaixo serão exibidos todos os dados fornecidos pela api, e caso deseje salvar, basta apertar o botão de salvar em baixo
 
 O arquivo salvo também será em formato .json
 
