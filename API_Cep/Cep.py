@@ -22,19 +22,22 @@ def get_by_cep(cep):
     else:
         print(f"O valor de cep {cep} é invalido, numero de caracteres deve ser igual a 8")
 
-def get_cep(uf,cidade,endereco):
-    #viacep.com.br/ws/RS/Porto Alegre/Porto Alegre/son
-    url_request =f'https://viacep.com.br/ws/{uf}/{cidade}/{endereco}/json/'
-    requisition = requests.get(url_request)
-
-    if requisition.status_code ==200:
-        return requisition.json()
-    else:
-       print(f"Erro de requisição {requisition.status_code}") 
-
-cepRJ = get_by_cep("2023-0010")
-acharCep = get_cep("SP","São paulo","São paulo")
-
+def get_cep_search():
+   cep_digitado = cep_texto.get()
+   busca = get_by_cep(cep_digitado)
+   
+   if isinstance(busca,dict):
+        tabela = pd.DataFrame([busca])
+        tabela_Trans = tabela.T
+        
+        tabela_String = tabela_Trans.to_string(header=False)
+        resultado.insert(END,"=== Resultado da busca ===")
+        for i in tabela_String.split('\n'):
+            resultado.insert(END,i)
+        
+   else : 
+       resultado.delete(0,END)
+       resultado.insert(END, "Resultado desconhecido")
 
 
 janela = Tk()
@@ -48,7 +51,7 @@ cep_texto = StringVar()
 entrada = Entry(janela, font=("Helvetica",16,"bold"), textvariable=cep_texto)
 entrada.pack()
 
-botao = Button(janela,text="Pesquisar", width=30,font=("Helvetica",10))
+botao = Button(janela,command=get_cep_search ,text="Pesquisar", width=30,font=("Helvetica",10))
 botao.pack(pady=2)
 
 resultado = Listbox(janela, width=70)
