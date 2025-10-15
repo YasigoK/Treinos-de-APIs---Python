@@ -1,10 +1,10 @@
 import requests
-import pandas as pd
 import json
 import os 
-from IPython.display import display 
 from tkinter import  *
 from tkinter import filedialog
+from tkinter import ttk
+from tkinter import messagebox
 
 
 salvar_resultado = None
@@ -27,29 +27,29 @@ def get_by_cep(cep):
 
 def get_cep_search():
    global salvar_resultado
+   global resultado_tabela
+   
    cep_digitado = cep_texto.get()
    busca = get_by_cep(cep_digitado)
-   
    if isinstance(busca,dict):
         salvar_resultado = busca
-        tabela = pd.DataFrame([busca])
-        tabela_Trans = tabela.T
         
-        tabela_String = tabela_Trans.to_string(header=False)
-        resultado.delete(0,END)
-        resultado.insert(END,"=== Resultado da busca ===")
-        for i in tabela_String.split('\n'):
-            resultado.insert(END,i)
+        ordem_campos = [
+            'cep', 'logradouro', 'complemento', 'bairro','localidade', 'uf', 'ibge', 'gia', 'ddd', 'siafi'
+        ]
+
+        valores = [str(busca.get(campo,'N/A')) for campo in ordem_campos]
         
-   else : 
-       salvar_resultado = None
-       resultado.delete(0,END)
-       resultado.insert(END, "Resultado desconhecido")
+        resultado_tabela.insert('', END,values=valores)
+   else:
+       salvar_resultado=None
+       resultado_tabela.insert('', END, values=(busca, '', '', '', '', '', '', '', '', ''))
+            
+    
 
 def save_file():
     if not salvar_resultado:
-        resultado.delete(0,END)
-        resultado.insert(END, "Error ao salvar, nenhum Cep consultado") 
+        messagebox.showerror("Erro ao salvar, nenhum CEP consultado") 
         return
     
     local_salvar = filedialog.asksaveasfilename(
@@ -62,13 +62,13 @@ def save_file():
         try:
             with open(local_salvar, 'w', encoding='utf-8') as f:
                 json.dump(salvar_resultado , f, indent=4,ensure_ascii=False)
-            resultado.insert(END, "Arquivo salvado com sucesso")
+            messagebox.showinfo("Arquivo salvado com sucesso")
         except Exception as e:
-             resultado.insert(END, "Error ao salvar, não foi possível salvar o arquivo")
+            messagebox.showerror("Erro ao salvar, não foi possível salvar o arquivo")
 
 janela = Tk()
 janela.title("Consulta de cep")
-janela.geometry("800x600")
+janela.geometry("1000x500")
 
 campo_texto= Label(janela, text="Digite o cep para realizar uma consulta", font=("Helvetica",16))
 campo_texto.pack(pady=16)
@@ -83,8 +83,16 @@ entrada.pack(side=LEFT, padx=(0, 10))
 botao = Button(frame_busca,command=get_cep_search ,text="Pesquisar", width=15,font=("Helvetica",10))
 botao.pack(side=LEFT)
 
-resultado = Listbox(janela, width=63)
-resultado.pack(pady=9)
+colunas = ('cep', 'logradouro', 'complemento', 'bairro','localidade', 'uf', 'ibge', 'gia', 'ddd', 'siafi')
+
+resultado_tabela = ttk.Treeview(janela, columns=colunas, show = 'headings')
+resultado_tabela.pack(pady=10, padx=10, fill='x', expand=True)
+
+larguras_campos = [70, 150, 120, 120, 150, 20, 50, 50, 20, 50]
+
+for i, nome_coluna in enumerate(colunas):
+    resultado_tabela.heading(nome_coluna, text=nome_coluna.capitalize())
+    resultado_tabela.column(nome_coluna, width=larguras_campos[i], minwidth=larguras_campos[i],anchor=CENTER)
 
 salvar = Button(janela, command=save_file, text="Salvar", width=30,font=("Helvetica",10) )
 salvar.pack(pady=10)
