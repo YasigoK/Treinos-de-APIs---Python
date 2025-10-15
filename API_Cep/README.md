@@ -47,3 +47,9 @@ O arquivo salvo também será em formato .json
 
 ### exemplo de arquivo gerado : 
 <img src='assets/img3.png' width =500>
+
+
+
+
+
+_Nota : proximo passo será realizar a integração com banco de dados, podendo adicionar as informações coletadas pela API no banco._

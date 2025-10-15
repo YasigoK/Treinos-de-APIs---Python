@@ -38,7 +38,10 @@ def get_cep_search():
             'cep', 'logradouro', 'complemento', 'bairro','localidade', 'uf', 'ibge', 'gia', 'ddd', 'siafi'
         ]
 
-        valores = [str(busca.get(campo,'N/A')) for campo in ordem_campos]
+        valores = [
+            str(busca.get(campo,'N/A')) 
+            for campo in ordem_campos
+            ]
         
         resultado_tabela.insert('', END,values=valores)
    else:
