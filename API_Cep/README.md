@@ -78,3 +78,7 @@ Exibição dos dados inseridos no banco
 
 
 <img src='assets/img6.png' width =500>
+
+
+
+_Nota para atualizações futuras, adicionar detecção se o item já existe no banco de dados._
