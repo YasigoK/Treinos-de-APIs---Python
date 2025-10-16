@@ -66,10 +66,15 @@ Onde vocêm também determina o nome do banco que vai trabalhar
 <br>
 ### Exemplo de execução 
 salvando no banco de dados local :
+
 <br>
+
 <img src='assets/img5.png' width =500>
 
-<br>
+<br><br>
 
 Exibição dos dados inseridos no banco
+
+
+
 <img src='assets/img6.png' width =500>
