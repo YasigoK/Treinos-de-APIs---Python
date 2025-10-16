@@ -41,15 +41,35 @@ Depois basta digitar o **Cep** que deseja **pesquisar**
 
 <img src='assets/img2.png' width =500>
 
-No campo abaixo serão exibidos todos os dados fornecidos pela api, e caso deseje salvar, basta apertar o botão de salvar em baixo
+___
 
-O arquivo salvo também será em formato .json
+No campo abaixo serão exibidos todos os dados fornecidos pela api, e caso deseje salvar, basta apertar o botão de salvar em baixo
+O arquivo salvo também será em formato **.json**
 
 ### exemplo de arquivo gerado : 
 <img src='assets/img3.png' width =500>
 
+___
 
+## Banco de dados
+Você também pode optar por salvar as informações direto em algum banco de dados, 
+para esse teste eu utilizei o localhost mesmo, tudo isso será configurado na variável
+```Python
+conexao_bd = (
+    "Driver={SQL Server};"
+    "Server=.;"  #localhost
+    "Database=TabelaCep;"
+    "Trusted_Connection=yes;"
+)
+```
+Onde vocêm também determina o nome do banco que vai trabalhar
+<br>
+### Exemplo de execução 
+salvando no banco de dados local :
+<br>
+<img src='assets/img5.png' width =500>
 
+<br>
 
-
-_Nota : proximo passo será realizar a integração com banco de dados, podendo adicionar as informações coletadas pela API no banco._
+Exibição dos dados inseridos no banco
+<img src='assets/img6.png' width =500>

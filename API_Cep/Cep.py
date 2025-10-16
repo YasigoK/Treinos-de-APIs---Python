@@ -1,6 +1,7 @@
 import requests
 import json
 import os 
+import pyodbc
 from tkinter import  *
 from tkinter import filedialog
 from tkinter import ttk
@@ -8,6 +9,13 @@ from tkinter import messagebox
 
 
 salvar_resultado = None
+       
+conexao_bd = (
+    "Driver={SQL Server};"
+    "Server=.;"  #localhost
+    "Database=TabelaCep;"
+    "Trusted_Connection=yes;"
+)
 
 os.system('cls' if os.name=='nt' else 'clear')
 def get_by_cep(cep):
@@ -69,6 +77,35 @@ def save_file():
         except Exception as e:
             messagebox.showerror("Erro ao salvar, não foi possível salvar o arquivo")
 
+def insert_data_bd():
+    global salvar_resultado
+    if not salvar_resultado:
+        messagebox.showerror("Erro ao adicionar, nenhum CEP consultado") 
+        return
+    
+    ordem_campos_sql = [
+        'CEP', 'Logradouro', 'Complemento', 'Bairro', 'Localidade','UF', 'IBGE', 'GIA', 'DDD', 'SIAFI'
+    ]
+
+    valores_sql=[
+        salvar_resultado.get(campo.lower(),None)
+        for campo in ordem_campos_sql
+
+    ]
+    insert_sql = f"""
+        INSERT INTO dadosCEP({', '.join(ordem_campos_sql)})
+        VALUES ({', '.join(['?']*len(ordem_campos_sql))})
+    """
+
+    conexao = pyodbc.connect(conexao_bd)
+    cursor = conexao.cursor()
+
+    cursor.execute(insert_sql,valores_sql)
+    conexao.commit()
+    messagebox.showinfo("Sucesso, dado adicionado ao banco de dados com sucesso!")
+    conexao.close()
+
+
 janela = Tk()
 janela.title("Consulta de cep")
 janela.geometry("1000x500")
@@ -99,6 +136,9 @@ for i, nome_coluna in enumerate(colunas):
 
 salvar = Button(janela, command=save_file, text="Salvar", width=30,font=("Helvetica",10) )
 salvar.pack(pady=10)
+
+inserirBd = Button(janela, command=insert_data_bd, text="Adicionar ao BD",width=30,font=("Helvetica",10))
+inserirBd.pack(pady=10)
 
 
 janela.mainloop()
