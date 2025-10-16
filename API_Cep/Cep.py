@@ -60,7 +60,7 @@ def get_cep_search():
 
 def save_file():
     if not salvar_resultado:
-        messagebox.showerror("Erro ao salvar, nenhum CEP consultado") 
+        messagebox.showerror("Erro", "Não foi possível salvar, nenhum CEP consultado") 
         return
     
     local_salvar = filedialog.asksaveasfilename(
@@ -73,14 +73,14 @@ def save_file():
         try:
             with open(local_salvar, 'w', encoding='utf-8') as f:
                 json.dump(salvar_resultado , f, indent=4,ensure_ascii=False)
-            messagebox.showinfo("Arquivo salvado com sucesso")
+            messagebox.showinfo("Salvo", "Arquivo salvado com sucesso")
         except Exception as e:
-            messagebox.showerror("Erro ao salvar, não foi possível salvar o arquivo")
+            messagebox.showerror("Error", "Erro ao salvar, não foi possível salvar o arquivo")
 
 def insert_data_bd():
     global salvar_resultado
     if not salvar_resultado:
-        messagebox.showerror("Erro ao adicionar, nenhum CEP consultado") 
+        messagebox.showerror("Error", "Erro ao adicionar, nenhum CEP consultado") 
         return
     
     ordem_campos_sql = [
@@ -102,7 +102,7 @@ def insert_data_bd():
 
     cursor.execute(insert_sql,valores_sql)
     conexao.commit()
-    messagebox.showinfo("Sucesso, dado adicionado ao banco de dados com sucesso!")
+    messagebox.showinfo("Sucesso", "dado adicionado ao banco de dados com sucesso!")
     conexao.close()
 
 
