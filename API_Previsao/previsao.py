@@ -1,10 +1,11 @@
 import xmltodict
-import json
 import requests
-import pprint
-import os
+import json
 import streamlit as st
 import numpy as np
+from dicionario import DICIONARIO_SIGLAS
+
+
 
 def get_previsao(id):
     url =f"http://servicos.cptec.inpe.br/XML/cidade/{id}/previsao.xml"
@@ -17,7 +18,7 @@ def get_previsao(id):
     else:
         print("Erro ao acessar informação")
         return None
-
+        
 st.set_page_config(layout="wide")
 
 st.title("previsão de 4 dias")
@@ -37,12 +38,14 @@ for i, repet in enumerate(previsao4dias):
 
     with colunas[i]:
         dia = repet.get('dia', 'N/A')
-        iuv = repet.get('iuv', 'N/A')
         maxima = repet.get('maxima', 'N/A')
         minima = repet.get('minima', 'N/A')
         tempo = repet.get('tempo', 'N/A')
+
         atual_min[i] = float(minima)
         atual_max[i] = float(maxima)
+        tempo_extenso = DICIONARIO_SIGLAS.get(tempo, tempo)
+
         if i == 0:
             variacao_min = None 
             variacao_max = None
@@ -66,14 +69,16 @@ for i, repet in enumerate(previsao4dias):
                     st.metric(
                         label="Temperatura Max",
                         value=f"{maxima}°C",
-                        delta=f"{variacao_min:+.1f}" if variacao_min is not None else None, 
+                        delta=f"{variacao_max:+.1f}" if variacao_min is not None else None, 
                         delta_color="inverse",
                     )
-            
-                with descricao:
+
+                
+                with st.container(border=False) :                   
                     st.metric(
-                        label="Tempo",
-                        value=f"{tempo}",
+                        label="Clima :",
+                        value=f"{tempo_extenso}",
+                        
                     )
 
 
